@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Card from "../components/Card";
 
 export interface BlogPost {
@@ -11,16 +11,31 @@ export interface BlogPost {
 
 function Blog() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
-    async function getPosts() {
-      const { data } = await axios.get<BlogPost[]>(
-        "http://localhost:3000/posts"
-      );
-      setBlogPosts(data);
-    }
-    getPosts();
+    (async () => {
+      try {
+        const { data } = await axios.get<BlogPost[]>(
+          "http://localhost:3000/posts"
+        );
+        setBlogPosts(data);
+      } catch (err) {
+        const error = err as AxiosError;
+        setError(error.message);
+      }
+      setIsLoading(false);
+    })();
   }, []);
+
+  if (isLoading) {
+    return <h1>...Loading</h1>;
+  }
+
+  if (error) {
+    return <h1>{error}</h1>;
+  }
 
   return (
     <div>
