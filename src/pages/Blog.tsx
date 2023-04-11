@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Card from "../components/Card";
 
-interface BlogPost {
+export interface BlogPost {
   id: number;
   title: string;
   content: string;
+  img: string;
 }
 
 function Blog() {
@@ -23,12 +25,11 @@ function Blog() {
   return (
     <div>
       <h1 className="text-4xl font-bold">Hello Blog</h1>
-      {blogPosts.map((post) => (
-        <section key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.content.substring(0, 150)}...</p>
-        </section>
-      ))}
+      <div className="flex">
+        {blogPosts.map((post) => (
+          <Card {...post} key={post.id} />
+        ))}
+      </div>
     </div>
   );
 }
