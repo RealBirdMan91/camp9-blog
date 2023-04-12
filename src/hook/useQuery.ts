@@ -9,7 +9,7 @@ export function useQuery<T>(url: string) {
   useEffect(() => {
     (async () => {
       try {
-        const { data } = (await axios.get(url)) as { data: T };
+        const { data } = await axios.get<T>(url);
         setData(() => data);
       } catch (err) {
         const error = err as AxiosError;
