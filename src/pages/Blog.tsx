@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import Card from "../components/Card";
+import { useQuery } from "../hook/useQuery";
 
 export interface BlogPost {
   id: number;
@@ -10,38 +11,23 @@ export interface BlogPost {
 }
 
 function Blog() {
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<null | string>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get<BlogPost[]>(
-          "http://localhost:3000/posts"
-        );
-        setBlogPosts(data);
-      } catch (err) {
-        const error = err as AxiosError;
-        setError(error.message);
-      }
-      setIsLoading(false);
-    })();
-  }, []);
+  const { isError, isLoading, data } = useQuery<BlogPost[]>(
+    "http://localhost:3000/posts"
+  );
 
   if (isLoading) {
     return <h1>...Loading</h1>;
   }
 
-  if (error) {
-    return <h1>{error}</h1>;
+  if (isError) {
+    return <h1>{isError}</h1>;
   }
 
   return (
     <div>
       <h1 className="text-4xl font-bold">Hello Blog</h1>
       <div className="flex">
-        {blogPosts.map((post) => (
+        {data?.map((post) => (
           <Card {...post} key={post.id} />
         ))}
       </div>
