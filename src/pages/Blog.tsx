@@ -28,7 +28,13 @@ function Blog() {
       <h1 className="text-4xl font-bold">Hello Blog</h1>
       <div className="flex">
         {data?.map((post) => (
-          <Card {...post} key={post.id} />
+          <Card
+            content={post.content}
+            img={post.img}
+            title={post.title}
+            key={post.id}
+            id={post.id}
+          />
         ))}
       </div>
     </div>

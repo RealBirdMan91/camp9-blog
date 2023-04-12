@@ -1,6 +1,7 @@
 import { type BlogPost } from "../pages/Blog";
+import { Link } from "react-router-dom";
 
-function Card(props: Omit<BlogPost, "id">) {
+function Card(props: BlogPost) {
   return (
     <article className="w-[350px] rounded-md m-4 shadow-md">
       <div className="relative">
@@ -10,6 +11,7 @@ function Card(props: Omit<BlogPost, "id">) {
         </h3>
       </div>
       <p className="p-4 text-slate-600">{props.content.substring(0, 150)}...</p>
+      <Link to={`/blog/${props.id}`}>Read more</Link>
     </article>
   );
 }
