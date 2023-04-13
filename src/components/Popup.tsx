@@ -5,6 +5,7 @@ import { BlogPost } from "../pages/Blog";
 
 type Props = {
   modelData: null | number;
+  setModalData: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 function Popup(props: Props) {
@@ -30,6 +31,7 @@ function Popup(props: Props) {
     console.log("hai Form");
     console.log(formState);
     axios.patch(`http://localhost:3000/posts/${props.modelData}`, formState);
+    props.setModalData(null);
   }
 
   return (

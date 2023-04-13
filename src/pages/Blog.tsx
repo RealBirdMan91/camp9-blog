@@ -26,7 +26,7 @@ function Blog() {
 
   useEffect(() => {
     axios.get("http://localhost:3000/posts").then((res) => setPosts(res.data));
-  }, []);
+  }, [modalData]);
 
   function onDeleteCardHandler(id: number) {
     axios.delete(`http://localhost:3000/posts/${id}`);
@@ -51,7 +51,7 @@ function Blog() {
           />
         ))}
       </div>
-      <Popup modelData={modalData} />
+      <Popup modelData={modalData} setModalData={setModalData} />
     </div>
   );
 }
