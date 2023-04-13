@@ -26,6 +26,12 @@ function Blog() {
     axios.get("http://localhost:3000/posts").then((res) => setPosts(res.data));
   }, []);
 
+  function onDeleteCardHandler(id: number) {
+    axios.delete(`http://localhost:3000/posts/${id}`);
+    const newPostState = posts.filter((post) => post.id !== id);
+    setPosts(newPostState);
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <h1 className="text-4xl font-bold">Hello Blog</h1>
@@ -38,6 +44,7 @@ function Blog() {
             title={post.title}
             key={post.id}
             id={post.id}
+            onDelete={onDeleteCardHandler}
           />
         ))}
       </div>
