@@ -4,6 +4,7 @@ import axios from "axios";
 
 interface Props extends BlogPost {
   onDelete: (id: number) => void;
+  onEdit: () => void;
 }
 
 function Card(props: Props) {
@@ -23,6 +24,12 @@ function Card(props: Props) {
           onClick={() => props.onDelete(props.id)}
         >
           Delete
+        </button>
+        <button
+          className="bg-blue-500 text-white p-1"
+          onClick={() => props.onEdit()}
+        >
+          Edit
         </button>
       </div>
     </article>

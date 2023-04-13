@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import Card from "../components/Card";
 import { useQuery } from "../hook/useQuery";
 import { PostForm } from "../components/PostForm";
+import Popup from "../components/Popup";
 
 export interface BlogPost {
   id: number;
@@ -21,6 +22,7 @@ export interface BlogPost {
 
 function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [isShownModal, setIsShownModal] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:3000/posts").then((res) => setPosts(res.data));
@@ -45,9 +47,11 @@ function Blog() {
             key={post.id}
             id={post.id}
             onDelete={onDeleteCardHandler}
+            onEdit={() => console.log("edit me")}
           />
         ))}
       </div>
+      <Popup show={isShownModal} />
     </div>
   );
 }
