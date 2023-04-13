@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import axios from "axios";
+import { BlogPost } from "../pages/Blog";
 
 type Props = {
   modelData: null | number;
@@ -11,7 +12,18 @@ function Popup(props: Props) {
     title: "",
     content: "",
   });
-  console.log(props.modelData);
+
+  useEffect(() => {
+    console.log(props.modelData);
+    if (props.modelData) {
+      axios
+        .get<BlogPost>(`http://localhost:3000/posts/${props.modelData}`)
+        .then(({ data }) => {
+          setFormState({ title: data.title, content: data.content });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [props.modelData]);
 
   function onSubmitFormHandler(event: React.FormEvent) {
     event.preventDefault();
