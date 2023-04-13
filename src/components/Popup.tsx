@@ -1,21 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
+import axios from "axios";
 
 type Props = {
-  show: boolean;
+  modelData: null | number;
 };
 
 function Popup(props: Props) {
+  const [formState, setFormState] = useState({
+    title: "",
+    content: "",
+  });
+  console.log(props.modelData);
+
+  function onSubmitFormHandler(event: React.FormEvent) {
+    event.preventDefault();
+    console.log("hai Form");
+    console.log(formState);
+    axios.patch(`http://localhost:3000/posts/${props.modelData}`, formState);
+  }
+
   return (
     <div
       className={clsx(
         "fixed bg-slate-700/75 w-full h-screen top-0 left-0 flex justify-center items-center",
-        props.show ? "block" : "hidden"
+        props.modelData ? "block" : "hidden"
       )}
     >
-      <form className="flex flex-col gap-2 w-3/5 p-4 bg-red-300  rounded-sm shadow-md">
-        <input type="text" name="title" placeholder="Title" />
-        <textarea rows={10} placeholder="Content" name="content"></textarea>
+      <form
+        className="flex flex-col gap-2 w-3/5 p-4 bg-red-300  rounded-sm shadow-md"
+        onSubmit={(e) => onSubmitFormHandler(e)}
+      >
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          onChange={(e) =>
+            setFormState((prevState) => ({
+              ...prevState,
+              title: e.target.value,
+            }))
+          }
+          value={formState.title}
+        />
+        <textarea
+          rows={10}
+          placeholder="Content"
+          name="content"
+          value={formState.content}
+          onChange={(e) =>
+            setFormState((prevState) => ({
+              ...prevState,
+              content: e.target.value,
+            }))
+          }
+        ></textarea>
         <button
           type="submit"
           className="bg-pink-500 text-white rounded-md px-3 py-1"

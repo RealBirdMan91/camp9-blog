@@ -1,10 +1,11 @@
 import { type BlogPost } from "../pages/Blog";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props extends BlogPost {
   onDelete: (id: number) => void;
-  onEdit: () => void;
+  onEdit: Dispatch<SetStateAction<number | null>>;
 }
 
 function Card(props: Props) {
@@ -27,7 +28,9 @@ function Card(props: Props) {
         </button>
         <button
           className="bg-blue-500 text-white p-1"
-          onClick={() => props.onEdit()}
+          onClick={() => {
+            props.onEdit(props.id);
+          }}
         >
           Edit
         </button>

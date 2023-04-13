@@ -22,7 +22,7 @@ export interface BlogPost {
 
 function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [isShownModal, setIsShownModal] = useState(false);
+  const [modalData, setModalData] = useState<null | number>(null);
 
   useEffect(() => {
     axios.get("http://localhost:3000/posts").then((res) => setPosts(res.data));
@@ -47,11 +47,11 @@ function Blog() {
             key={post.id}
             id={post.id}
             onDelete={onDeleteCardHandler}
-            onEdit={() => console.log("edit me")}
+            onEdit={setModalData}
           />
         ))}
       </div>
-      <Popup show={isShownModal} />
+      <Popup modelData={modalData} />
     </div>
   );
 }
