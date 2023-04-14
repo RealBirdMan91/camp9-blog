@@ -26,5 +26,19 @@
     }
   ],
   "comments": [],
-  "replies": []
+  "replies": [],
+  "guestbook": [
+    {
+      "id": 1,
+      "name": "Julian",
+      "title": "Wow such a nice title",
+      "content": "Wow such a nice content"
+    },
+    {
+      "id": 2,
+      "name": "Maria",
+      "title": "Wow such a nice title!!!",
+      "content": "Wow such a nice content!!!"
+    }
+  ]
 }
